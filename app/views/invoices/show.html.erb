@@ -1,0 +1,62 @@
+
+<div class="container">
+<h3><%=h @invoice.invoice_no %></h3>
+
+<dl class="dl-horizontal">
+  <dt>Invoice No : </dt>
+  <dd><%= @invoice.invoice_no%></dd>
+    <dt>Total : </dt>
+  <dd><%= @invoice.total %></dd>
+    <dt>Issue Date : </dt>
+  <dd><%= @invoice.issue_date %></dd>
+    <dt>Due Date : </dt>
+  <dd><%= @invoice.due_date %></dd>
+</dl>
+<!-- 
+<p>Created: <i><%= time_ago_in_words(@invoice.created_at) %> ago</i></p>
+ -->
+<h4>Line Item</h4>
+
+ <table class="table table-hover">
+  <tr>
+    <th><h4>Invoice No</h4></th>
+    <th><h4>Product ID</h4></th>
+    <th><h4>Name</h4></th>
+    <th><h4>Price</h4></th>
+    <th><h4>Quantity</h4></th>
+    <th></th>
+    <th></th>
+    <th></th>
+ 
+    <% @invoice.lineitems.each do |lineitem| %>
+
+      <tr>
+        <td><h5><%= lineitem.invoice.invoice_no %></h5></td>
+        <td><h5><%= lineitem.product_id %></h5></td>
+        <td><h5><%= lineitem.product_name %></h5></td>
+        <td><h5><%= lineitem.unit_price %></h5></td>
+        <td><h5><%= lineitem.quantity %></h5></td> 
+        <td>
+          <%= link_to 'Edit', edit_invoice_path(@invoice.id), class: "btn btn-default"%>
+        </td>
+      </tr>
+    <% end %> 
+    <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="right"><h4>Total</h4></td>
+              <td class="right"><h4><%= @invoice.total %> Baht</h4></td>
+              <td class="center"></td> 
+            </tr>
+          </tfoot>
+  </table>
+
+<%= link_to 'Back', :action => nil %>
+
+</div>
+
+
+
+
+

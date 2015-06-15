@@ -1,0 +1,31 @@
+
+<div class="container">
+<h1>Invoice</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Invoice No</th>
+      <th>Total</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @invoices.each do |invoice| %>
+  <tr>
+    <td><%= invoice.invoice_no%></td>
+    <td><%= invoice.total %></td>
+    <td><%= invoice.issue_date %></td>
+    <td><%= invoice.due_date %></td>
+    <td>
+          <%= link_to 'Show', invoice_path(invoice.id), class: "btn btn-info" %>
+          <%= link_to 'Edit', edit_invoice_path(invoice.id), class: "btn btn-default" %>
+         <%= link_to "Destroy",invoice, class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New invoice', new_invoice_path, class: "btn btn-primary", "data-no-turbolink" => true %>
+</div>

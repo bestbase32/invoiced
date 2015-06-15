@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>Edit Invoice <%= @invoice.invoice_no %></h1>
+  <%= nested_form_for @invoice do |f| %>
+    <p>
+      Issue Date: <%= f.text_field :issue_date, data: { provide: 'datepicker' } %>
+    </p>
+    <p>
+      Due Date: <%= f.text_field :due_date, data: { provide: 'datepicker' } %>
+    </p>
+
+    <div class="container">
+      <h3>
+        Line Item
+        <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
+      </h3>
+      <div class="row clearfix">
+        <div class="col-md-12 column">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">
+                  Product ID
+                </th>
+                <th class="text-center">
+                  Product Name
+                </th>
+                <th class="text-center">
+                  Unit Price
+                </th>
+                <th class="text-center">
+                  Quantity
+                </th>
+              </tr>
+            </thead>
+            <tbody id="lineitems">
+              <%= f.fields_for :lineitems, wrapper: false do |item| %>
+                <tr class='fields'>
+                  <td>
+                    <%= item.text_field :product_id, placeholder: "Product ID", class: "form-control" %>
+                  </td>
+                  <td>
+                    <%= item.text_field :product_name, placeholder: "Product Name", class: "form-control" %>
+                  </td>
+                  <td>
+                     <%= item.text_field :unit_price, placeholder: "Unit Price", class: "form-control" %>
+                  </td>
+                  <td>
+                    <%= item.text_field :quantity, placeholder: "Quantity", class: "form-control" %>
+                  </td>
+                  <td>
+                    <%= item.link_to_remove "Remove" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <%= f.submit "Save", class: "btn btn-default" %>
+    <%= link_to 'Back', :action => nil %>
+  <% end %>
+</div>
