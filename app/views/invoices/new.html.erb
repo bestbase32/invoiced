@@ -19,9 +19,9 @@
         <%= f.text_field :issue_date, data: { provide: 'datepicker' } %>
       </div>
     </div>
+  </div>
 
     <div class="container">
-     
       <div class="row clearfix">
         <div class="col-md-12 column">
            <h3>Line Item</h3>
@@ -68,8 +68,9 @@
           <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
         </div>
       </div>
-    </div>
+   
     <%= f.submit "Save", class: "btn btn-default" %>
     <%= link_to 'Back', :action => nil %>
+     </div>
   <% end %>
 </div>
