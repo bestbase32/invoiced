@@ -11,7 +11,7 @@
     <div class="container">
       <h3>
         Line Item
-        <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
+       
       </h3>
       <div class="row clearfix">
         <div class="col-md-12 column">
@@ -54,6 +54,7 @@
               <% end %>
             </tbody>
           </table>
+           <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
         </div>
       </div>
     </div>

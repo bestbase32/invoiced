@@ -8,11 +8,12 @@ class Invoice < ActiveRecord::Base
             uniqueness: true
   
   after_touch :calculate_total
-
-  def invoice_number_incrementation
+  after_initialize :generate_id
+  
+  def generate_id
     unless invoice_no
       last_invoice = Invoice.order(:invoice_no).last
-      self.invoice_no = last_invoice ? last_invoice.invoice_no.succ : "001"
+      self.invoice_no = last_invoice ? last_invoice.invoice_no.succ : "IN001"
     end
   end
 
