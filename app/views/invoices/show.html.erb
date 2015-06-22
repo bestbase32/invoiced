@@ -1,62 +1,121 @@
-
 <div class="container">
-<h3><%=h @invoice.invoice_no %></h3>
-
-<dl class="dl-horizontal">
-  <dt>Invoice No : </dt>
-  <dd><%= @invoice.invoice_no%></dd>
-    <dt>Total : </dt>
-  <dd><%= @invoice.total %></dd>
-    <dt>Issue Date : </dt>
-  <dd><%= @invoice.issue_date %></dd>
-    <dt>Due Date : </dt>
-  <dd><%= @invoice.due_date %></dd>
-</dl>
-<!-- 
-<p>Created: <i><%= time_ago_in_words(@invoice.created_at) %> ago</i></p>
- -->
-<h4>Line Item</h4>
-
- <table class="table table-hover">
-  <tr>
-    <th><h4>Invoice No</h4></th>
-    <th><h4>Product ID</h4></th>
-    <th><h4>Name</h4></th>
-    <th><h4>Price</h4></th>
-    <th><h4>Quantity</h4></th>
-    <th></th>
-    <th></th>
-    <th></th>
- 
-    <% @invoice.lineitems.each do |lineitem| %>
-
+    <div class="row">
+        <div class="col-xs-12">
+        <div class="invoice-title">
+          <div style="margin : auto; text-align: center">
+          <%= image_tag attachment_url(current_user, :profile_image, :fill, 100, 100, format: "jpg") %>
+  
+        <h3 class="pull-right"><%= @invoice.invoice_no %></h3>  </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6">
+            <address>
+            <h4>Billed To:</h4><br>
+              <%= current_user.first_name %> <%= current_user.last_name %><br>
+              <%= @current_user.address %><br>
+              <%= current_user.phone %><br>
+              <%= current_user.email %>
+            </address>
+          </div>
+          <div class="col-xs-6 text-right">
+            <address>
+              <h4>Shipped To:</h4><br>
+              <%= @customer.customer_name %><br>
+              <%= @customer.customer_address %><br>
+              <%= @customer.phone_no %><br>
+              <%= @customer.email %>
+            </address>
+          </div>
+        </div>
+        <div class="row">
+  
+          <div class="pull-right">
+            <address>
+              <strong>Order Date:</strong>
+              <%= @invoice.issue_date %><br>
+              <strong>Due Date:</strong>
+              <%= @invoice.due_date %><br><br>
+            </address>
+          </div>
+      </div>
+    </div>
+    
+  <!--
+  <p>Created: <i><%= time_ago_in_words(@invoice.created_at) %> ago</i></p>
+  -->
+  <h4>Line Item</h4>
+  <table class="table table-hover">
+    <tr>
+      <th><h4>Product ID</h4></th>
+      <th><h4>Name</h4></th>
+      <th><h4>Price</h4></th>
+      <th><h4>Quantity</h4></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      
+      <% @invoice.lineitems.each do |lineitem| %>
       <tr>
-        <td><h5><%= lineitem.invoice.invoice_no %></h5></td>
         <td><h5><%= lineitem.product_id %></h5></td>
         <td><h5><%= lineitem.product_name %></h5></td>
         <td><h5><%= lineitem.unit_price %></h5></td>
-        <td><h5><%= lineitem.quantity %></h5></td> 
+        <td><h5><%= lineitem.quantity %></h5></td>
         <td>
-          <%= link_to 'Edit', edit_invoice_path(@invoice.id), class: "btn btn-default"%>
+          <%= link_to 'Edit', edit_customer_invoice_path(@customer, @invoice), class: "btn btn-default"%>
         </td>
       </tr>
-    <% end %> 
-    <tfoot>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="right"><h4>Total</h4></td>
-              <td class="right"><h4><%= @invoice.total %> Baht</h4></td>
-              <td class="center"></td> 
-            </tr>
-          </tfoot>
-  </table>
+      <% end %>
+      <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="right"><h4>Total</h4></td>
+        <td class="right"><h4><%= @invoice.total %> Baht</h4></td>
+        <td class="center"></td>
+      </tr>
+      </tfoot>
+    </table>
 
-<%= link_to 'Back', :action => nil %>
+  <h4>Payment</h4>
+  <table class="table table-hover">
+    <tr>
+      <th><h4>Payment Date</h4></th>
+      <th><h4>Description</h4></th>
+      <th><h4>Method</h4></th>
+      <th><h4>Amount</h4></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      
+      <% @invoice.payments.each do |payment| %>
+      <tr>
+        <td><h5><%= payment.pay_date %></h5></td>
+        <td><h5><%= payment.pay_desc %></h5></td>
+        <td><h5><%= payment.pay_method %></h5></td>
+        <td><h5><%= payment.pay_amount %></h5></td>
+        <td>
+          <%= link_to 'Edit', edit_customer_invoice_path(@customer, @invoice), class: "btn btn-default"%>
+        </td>
+      </tr>
+      <% end %>
+      <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="right"><h4>Total</h4></td>
+        <td class="right"><h4><%= @invoice.pay_total %> Baht</h4></td>
+        <td class="center"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="right"><h4>Remain</h4></td>
+        <td class="right"><h4><%= @invoice.pay_remain %> Baht</h4></td>
+        <td class="center"></td>
+      </tr>
+      </tfoot>
+    </table>
 
-</div>
 
-
-
-
-
+  <%= link_to 'Back', customer_path(@customer.id) %>

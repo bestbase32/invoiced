@@ -1,7 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  invoice_id: 
+lineitem_one:
+  invoice: invoice_1
+  product_id: "PR001"
+  product_name: "Pen"
+  unit_price: 100
+  quantity: 1
 
-two:
-  invoice_id: 
+lineitem_two:
+  invoice: invoice_2
+  product_id: "PR002"
+  product_name: "Pencil"
+  unit_price: 30
+  quantity: 1
+
+
+

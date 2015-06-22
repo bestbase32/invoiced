@@ -27,6 +27,9 @@ gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass', '~> 3.3.4'
 gem 'nested_form'
 gem 'quiet_assets'
+gem 'devise'
+gem "refile", require: "refile/rails"
+gem "refile-mini_magick"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -38,6 +41,8 @@ gem 'quiet_assets'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'minitest-nyan-cat'
+  gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 

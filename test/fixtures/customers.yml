@@ -1,9 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  customer_name: MyString
-  customer_address: MyString
+customer_one:
+  customer_name: "bob"
+  customer_address: "555/1 thorlor"
+  phone_no: 0123312
+  email: "aa@hotmail.com"
+  user: user_one
 
-two:
-  customer_name: MyString
-  customer_address: MyString
+customer_two:
+  customer_name: "best"
+  customer_address: "222/6 bangrak"
+  email: "bb@hotmail.com"
+  phone_no: 09091312
+  user: user_two

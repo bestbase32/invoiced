@@ -19,4 +19,4 @@
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.fr.js
 //= require jquery_nested_form
 
-$.fn.datepicker.defaults.format = "dd/mm/yyyy";
+$.fn.datepicker.defaults.format = "dd/mm/2015";

@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="invoice-title">
+        <div style="margin : auto; text-align: center">
+          <%= image_tag attachment_url(current_user, :profile_image, :fill, 100, 100, format: "jpg") %>
+          
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-6">
+          <address>
+            <h4>Billed To:</h4><br>
+            <%= current_user.first_name %> <%= current_user.last_name %><br>
+            <%= @current_user.address %><br>
+            <%= current_user.phone %><br>
+            <%= current_user.email %>
+          </address>
+        </div>
+        <div class="col-xs-6 text-right">
+          <address>
+            <h4>Shipped To:</h4><br>
+            <%= @customer.customer_name %><br>
+            <%= @customer.customer_address %><br>
+            <%= @customer.phone_no %><br>
+            <%= @customer.email %>
+          </address>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+    <div class="container">
+      <h4>Invoices of <%= @customer.customer_name %> </h4>
+      <table class="table table-hover">
+        <tr>
+          <th><h4>Invoice</h4></th>
+          <th><h4>Issue date</h4></th>
+          <th><h4>Due date</h4></th>
+          <th><h4>Total</h4></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @customer.invoices.each do |invoice| %>
+        <tr >
+          <td><%= invoice.invoice_no %></td>
+          <td><%= invoice.issue_date %></td>
+          <td><%= invoice.due_date %></td>
+          <td><%= invoice.total %></td>
+          <td>
+            <div style="margin : auto; text-align: center">
+            <%= link_to 'Show', customer_invoice_path(@customer,invoice), class: "btn btn-info" %>
+            <%= link_to 'Edit', edit_customer_invoice_path(@customer, invoice), class: "btn btn-default" %>
+            <%= link_to 'Delete', customer_invoice_path(@customer, invoice), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %>
+             </div>
+          </td>
+          <td>
+          <div style="margin : auto; text-align: center">
+            <%= link_to 'Add payment', edit_customer_invoice_path(@customer, invoice), class: "btn btn-success" %>
+          </div>
+        </td>
+        </tr>
+        <tfoot>
+        </tfoot>
+        <% end %>
+        
+      </table>
+      <%= link_to "Add new invoice", new_customer_invoice_path(@customer), class: "btn btn-primary" if @customer %>
+    </div>
+  </div>
+  <%= link_to 'Back', :action => nil %>

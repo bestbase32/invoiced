@@ -1,18 +1,47 @@
 <div class="container">
-  <h1>Edit Invoice <%= @invoice.invoice_no %></h1>
-  <%= nested_form_for @invoice do |f| %>
-    <p>
-      Issue Date: <%= f.text_field :issue_date, data: { provide: 'datepicker' } %>
-    </p>
-    <p>
-      Due Date: <%= f.text_field :due_date, data: { provide: 'datepicker' } %>
-    </p>
+  <%= nested_form_for [@customer,@invoice] do |f| %>
+    <div class="row">
+        <div class="col-xs-12">
+        <div class="invoice-title">
+        <div style="margin : auto; text-align: center">
+          <%= image_tag attachment_url(current_user, :profile_image, :fill, 100, 100, format: "jpg") %>
+  <h3 class="pull-right">Edit Invoice <%= @invoice.invoice_no %></h3>  </div>
+       </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-6">
+            <address>
+            <h4>Billed To:</h4><br>
+              <%= current_user.first_name %> <%= current_user.last_name %><br>
+              <%= @current_user.address %><br>
+              <%= current_user.phone %><br>
+              <%= current_user.email %>
+            </address>
+          </div>
+          <div class="col-xs-6 text-right">
+            <address>
+              <h4>Shipped To:</h4><br>
+              <%= @customer.customer_name %><br>
+              <%= @customer.customer_address %><br>
+              <%= @customer.phone_no %><br>
+              <%= @customer.email %>
+            </address>
+          </div>
+        </div>
+        <div class="row">
+          <div class="pull-right">
+            <address>
+              <strong>Order Date:</strong>
+              <%= f.text_field :issue_date, data: { provide: 'datepicker' } %><br><br>
+              <strong>Due Date:</strong>
+              <%= f.text_field :due_date, data: { provide: 'datepicker' } %><br><br>
+            </address>
+          </div>
+      </div>
+    </div>
 
-    <div class="container">
-      <h3>
-        Line Item
-       
-      </h3>
+  <div class="container">
+    <h3>Line Item</h3>
       <div class="row clearfix">
         <div class="col-md-12 column">
           <table class="table table-bordered table-hover">
@@ -34,31 +63,80 @@
             </thead>
             <tbody id="lineitems">
               <%= f.fields_for :lineitems, wrapper: false do |item| %>
-                <tr class='fields'>
-                  <td>
-                    <%= item.text_field :product_id, placeholder: "Product ID", class: "form-control" %>
-                  </td>
-                  <td>
-                    <%= item.text_field :product_name, placeholder: "Product Name", class: "form-control" %>
-                  </td>
-                  <td>
-                     <%= item.text_field :unit_price, placeholder: "Unit Price", class: "form-control" %>
-                  </td>
-                  <td>
-                    <%= item.text_field :quantity, placeholder: "Quantity", class: "form-control" %>
-                  </td>
-                  <td>
-                    <%= item.link_to_remove "Remove" %>
-                  </td>
-                </tr>
+              <tr class='fields'>
+                <td>
+                  <%= item.text_field :product_id, placeholder: "Product ID", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.text_field :product_name, placeholder: "Product Name", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.text_field :unit_price, placeholder: "Unit Price", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.text_field :quantity, placeholder: "Quantity", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.link_to_remove "Remove" %>
+                </td>
+              </tr>
               <% end %>
             </tbody>
           </table>
-           <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
+          <%= f.link_to_add 'Add Row', :lineitems, data: { target: '#lineitems' }, class: "btn btn-primary pull-right" %>
         </div>
       </div>
     </div>
-    <%= f.submit "Save", class: "btn btn-default" %>
-    <%= link_to 'Back', :action => nil %>
+
+      <div class="container">
+    <h3>Payment</h3>
+      <div class="row clearfix">
+        <div class="col-md-12 column">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">
+                  Payment Date
+                </th>
+                <th class="text-center">
+                  Description
+                </th>
+                <th class="text-center">
+                  Method
+                </th>
+                <th class="text-center">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody id="payments">
+              <%= f.fields_for :payments, wrapper: false do |item| %>
+              <tr class='fields'>
+                <td>
+                  <%= item.text_field :pay_date,data: { provide: 'datepicker' }, placeholder: "Payment Date", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.text_field :pay_desc, placeholder: "Description", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.select :pay_method, [['Cash', 'Cash'], ['Cheque', 'Cheque'], ['Credit Card', 'Credit Card']], include_blank: 'Please select' %>
+                </td>
+                <td>
+                  <%= item.text_field :pay_amount, placeholder: "Amount", class: "form-control" %>
+                </td>
+                <td>
+                  <%= item.link_to_remove "Remove" %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <%= f.link_to_add 'Add Row', :payments, data: { target: '#payments' }, class: "btn btn-primary pull-right" %>
+        </div>
+      </div>
+    </div>
+
+  <%= f.submit "Save", class: "btn btn-default" %>
+  <%= link_to 'Back', customer_path(@customer.id) %>
   <% end %>
 </div>
